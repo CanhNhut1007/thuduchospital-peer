@@ -7,9 +7,13 @@ LABEL  maintainer="Thach Canh Nhut"
 #1. Create a folder
 RUN rm -r /etc/hyperledger/fabric
 
-ENV CORE_PEER_MSPCONFIGPATH=/var/hyperledger/ThuDucHospital/msp
-
 ENV FABRIC_CFG_PATH=/var/hyperledger/ThuDucHospital
+
+ENV CORE_PEER_MSPCONFIGPATH=/var/hyperledger/users/Admin/msp
+
+ENV FABRIC_LOGGING_SPEC=INFO
+
+ENV ORG_CONTEXT="ThuDucHospital"
 
 #2. Copy the crypto for peer crypto
 COPY ./config-org/ThuDucHospital/peers/peer1 /var/hyperledger/ThuDucHospital
@@ -21,27 +25,28 @@ COPY ./config-org/ThuDucHospital/users /var/hyperledger/users
 #COPY ./config/acme-peer-update.tx /var/hyperledger/config/acme-peer-update.tx
 
 #5. Copy the channel create tx file
-#COPY ./config/healthcare-channel.tx  /var/hyperledger/config/healthcare-channel.tx
+COPY channel.tx  /var/hyperledger/ThuDucHospital/channel.tx
 
 #6. Copy the core YAML
 COPY ./config-org/ThuDucHospital/peers/peer1/core.yaml /var/hyperledger/ThuDucHospital
 
-#7. Copy the bins
-
-#8. Copy the test chaincode
+#7. Copy the test chaincode
 COPY ./nodechaincode  /var/hyperledger/nodechaincode
+
+#8. Install the jq package - used in scripts
+RUN apk update \
+&& apk add jq \
+&& rm -rf /var/cache/apk/*
+
+#9. Launch the peer
+CMD peer node start
 
 #9. Set the working dir
 # RUN  echo "cd /var/hyperledger/bins" >> $HOME/.profile
 # RUN  echo "cd /var/hyperledger/bins" >> $HOME/.bashrc
 
 #10. Set the context for Admin user
-# RUN echo ". /var/hyperledger/bins/set-context.sh" >> $HOME/.bashrc
-
-#11. Install the jq package - used in scripts
-RUN apk update \
-&& apk add jq \
-&& rm -rf /var/cache/apk/*
+#RUN echo ". /var/hyperledger/bins/set-context.sh" >> $HOME/.bashrc
 
 #12. Create the package folder
 #RUN mkdir -p /var/hyperledger/packages
@@ -49,9 +54,6 @@ RUN apk update \
 #13. Copy the gocc package tar file to the image
 #COPY ./packages/gocc.1.0-1.0.tar.gz /var/hyperledger/packages/gocc.1.0-1.0.tar.gz
 
-#14. COPY fabric-ca-client
-#COPY ./bin/fabric-ca-client /usr/local/bin
-
-#15. Launch the peer
-CMD peer node start
+# #14. Launch the peer
+# CMD peer node start
 

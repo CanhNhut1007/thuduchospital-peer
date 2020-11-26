@@ -12,7 +12,7 @@
 #     exit
 # fi
 
-export ORG_CONTEXT=$1
+export ORG_CONTEXT="ThuDucHospital"
 # MSP_ID="$(tr '[:lower:]' '[:upper:]' <<< ${ORG_CONTEXT:0:1})${ORG_CONTEXT:1}"
 # export ORG_NAME=$MSP_ID
 
