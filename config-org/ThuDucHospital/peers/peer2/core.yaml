@@ -106,7 +106,7 @@ peer:
         # Overrides the endpoint that the peer publishes to peers
         # in its organization. For peers in foreign organizations
         # see 'externalEndpoint'
-        endpoint: peer2-thuduchospital:31751
+        endpoint: peer1-thuduchospital:30751
         # Maximum count of blocks stored in memory
         maxBlockCountToStore: 100
         # Max time between consecutive message pushes(unit: millisecond)
