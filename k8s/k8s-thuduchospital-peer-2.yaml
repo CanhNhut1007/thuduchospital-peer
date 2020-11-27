@@ -16,15 +16,6 @@ spec:
       labels:
         app: peer2-thuduchospital
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: node-master
-                operator: In
-                values:
-                - "1"
       containers:
       - name: peer2-thuduchospital
         # Image used
@@ -52,7 +43,7 @@ spec:
           - name: CORE_PEER_GOSSIP_ORGLEADER
             value: "false"
           - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-            value: peer2-thuduchospital:31751
+            value: peer1-thuduchospital:31751
           - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
             value: "true"
           - name: CORE_PEER_GOSSIP_BOOTSTRAP
