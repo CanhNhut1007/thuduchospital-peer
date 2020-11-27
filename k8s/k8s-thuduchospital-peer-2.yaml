@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: thuduchospital-peer-2-2
+  name: peer2-thuduchospital
   labels:
-    app: thuduchospital-peer-2
+    app: peer2-thuduchospital
 spec:
-  serviceName: thuduchospital-peer-2
+  serviceName: peer2-thuduchospital
   replicas: 1
   selector:
     matchLabels:
-      app: thuduchospital-peer-2
+      app: peer2-thuduchospital
   template:
     metadata:
       labels:
-        app: thuduchospital-peer-2
+        app: peer2-thuduchospital
     spec:
       affinity:
         nodeAffinity:
@@ -26,21 +26,21 @@ spec:
                 values:
                 - "1"
       containers:
-      - name: thuduchospital-peer-2
+      - name: peer2-thuduchospital
         # Image used
-        image: nhutori4/thuduchospital-peer-2:dev
+        image: nhutori4/peer2-thuduchospital:dev
         # Uncomment the following during development/testing of the image
         imagePullPolicy: Always
         env:
           - name: FABRIC_LOGGING_SPEC
             value: INFO
           - name: ORDERER_ADDRESS
-            value: healthcare-orderer-clusterip:30750
+            value: orderer1-ordererorg:30750
           - name: ORG_CONTEXT
             value: thuduchospital
           - name: CORE_PEER_ADDRESS
-          # value: thuduchospital-peer-2-clusterip:30751
-            value: thuduchospital-peer-2-clusterip:31751
+          # value: peer2-thuduchospital-clusterip:30751
+            value: peer2-thuduchospital:31751
           - name: CORE_PEER_LOCALMSPID
             value: msp
           - name: FABRIC_LOGGING_SPEC
@@ -52,9 +52,11 @@ spec:
           - name: CORE_PEER_GOSSIP_ORGLEADER
             value: "false"
           - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-            value: thuduchospital-peer-2-clusterip:31751
+            value: peer2-thuduchospital:31751
           - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
             value: "true"
+          - name: CORE_PEER_GOSSIP_BOOTSTRAP
+            value: peer2-thuduchospital:30751
           # Replacement for set-context in alpine
           # - name: MSP_ID
           #   value: AcmeMSP
@@ -63,7 +65,7 @@ spec:
           # - name: CORE_PEER_MSPCONFIGPATH
           #   value:  /var/hyperledger/config/users/Admin@acme.com/msp
         volumeMounts:
-        - name: thuduchospital-peer-2-ledger
+        - name: peer2-thuduchospital-ledger
           mountPath: /var/ledger
         - name: thuduchospital
           mountPath: /mnt/disks/org/ThuDucOrg/peer1/fabric-ca-client/
@@ -78,7 +80,7 @@ spec:
           path: /var/run/docker.sock
   volumeClaimTemplates:
   - metadata: 
-      name: thuduchospital-peer-2-ledger
+      name: peer2-thuduchospital-ledger
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: storageclass-thuduchospital
@@ -91,19 +93,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: thuduchospital-peer-2-clusterip
+  name: peer2-thuduchospital
 
 spec:
   # This defines which pods are going to be represented by this Service
   # The service becomes a network endpoint for either other services
   # or maybe external users to connect to (eg browser)
   selector:
-    app: thuduchospital-peer-2
+    app: peer2-thuduchospital
 
   ports:
-    - name: thuduchospital-peer-2-clusterip
+    - name: peer2-thuduchospital
       port: 31751
-    - name: thuduchospital-peer-2-cc-clusterip
+    - name: peer2-thuduchospital-cc-clusterip
       port: 31752
 
   type: ClusterIP
@@ -116,20 +118,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: thuduchospital-peer-2-nodeport
+  name: peer2-thuduchospital-nodeport
 
 spec:
   # This defines which pods are going to be represented by this Service
   # The service becomes a network endpoint for either other services
   # or maybe external users to connect to (eg browser)
   selector:
-    app: thuduchospital-peer-2
+    app: peer2-thuduchospital
 
   ports:
-    - name: thuduchospital-peer-2-nodeport-751
+    - name: peer2-thuduchospital-nodeport-751
       port: 31751
       nodePort: 31751
-    - name: thuduchospital-peer-2-cc-nodeport-752
+    - name: peer2-thuduchospital-cc-nodeport-752
       port: 31752
       nodePort: 31752
 
