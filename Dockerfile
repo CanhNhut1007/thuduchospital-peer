@@ -7,28 +7,26 @@ LABEL  maintainer="Thach Canh Nhut"
 #1. Create a folder
 RUN rm -r /etc/hyperledger/fabric
 
-ENV FABRIC_CFG_PATH=/var/hyperledger/ThuDucHospital
-
-ENV CORE_PEER_MSPCONFIGPATH=/var/hyperledger/users/Admin/msp
-
 ENV FABRIC_LOGGING_SPEC=INFO
 
 ENV ORG_CONTEXT="ThuDucHospital"
-
+ENV ORG_NAME="ThuDucHospitalMSP"
 #2. Copy the crypto for peer crypto
-COPY ./config-org/ThuDucHospital/peers/peer1 /var/hyperledger/ThuDucHospital
+COPY ./config-org/ThuDucHospital/peers/peer2 /var/hyperledger/ThuDucHospital
 
+ENV FABRIC_CFG_PATH=/var/hyperledger/ThuDucHospital
 #3. Copy the crypto for admin crypto
-COPY ./config-org/ThuDucHospital/users /var/hyperledger/users
+COPY ./config-org/ThuDucHospital/users /var/hyperledger/ThuDucHospital/users
 
 #4. Copy the anchor peer update tx
 #COPY ./config/acme-peer-update.tx /var/hyperledger/config/acme-peer-update.tx
 
+ENV CORE_PEER_MSPCONFIGPATH=/var/hyperledger/ThuDucHospital/users/Admin@ThuDucHospital/msp
 #5. Copy the channel create tx file
 COPY channel.tx  /var/hyperledger/ThuDucHospital/channel.tx
 
 #6. Copy the core YAML
-COPY ./config-org/ThuDucHospital/peers/peer1/core.yaml /var/hyperledger/ThuDucHospital
+COPY ./config-org/ThuDucHospital/peers/peer2/core.yaml /var/hyperledger/ThuDucHospital
 
 #7. Copy the test chaincode
 COPY ./nodechaincode  /var/hyperledger/nodechaincode
