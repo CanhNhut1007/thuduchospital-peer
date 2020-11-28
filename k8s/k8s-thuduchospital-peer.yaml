@@ -29,16 +29,14 @@ spec:
             value: orderer1-ordererorg:30750
           - name: CORE_PEER_ADDRESS
             value: peer1-thuduchospital:30751
-          - name: CORE_PEER_LOCALMSPID
-            value: msp
           - name: FABRIC_LOGGING_SPEC
             value: debug
           - name: CORE_PEER_TLS_ENABLED
             value: "true"
           - name: CORE_PEER_GOSSIP_USELEADERELECTION
-            value: "true"
-          - name: CORE_PEER_GOSSIP_ORGLEADER
             value: "false"
+          - name: CORE_PEER_GOSSIP_ORGLEADER
+            value: "true"
           - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
             value: peer1-thuduchospital:30751
           - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
@@ -86,7 +84,7 @@ spec:
   ports:
     - name: peer1-thuduchospital
       port: 30751
-    - name: peer1-thuduchospital-cc-clusterip
+    - name: peer1-thuduchospital
       port: 30752
 
   type: ClusterIP
