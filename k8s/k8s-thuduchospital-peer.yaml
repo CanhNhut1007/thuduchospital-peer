@@ -84,7 +84,7 @@ spec:
   ports:
     - name: peer1-thuduchospital
       port: 30751
-    - name: peer1-thuduchospital
+    - name: peer1-thuduchospital-cc-clusterip
       port: 30752
 
   type: ClusterIP
