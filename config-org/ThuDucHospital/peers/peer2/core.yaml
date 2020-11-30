@@ -80,7 +80,7 @@ peer:
         # Important: The endpoints here have to be endpoints of peers in the same
         # organization, because the peer would refuse connecting to these endpoints
         # unless they are in the same organization as the peer.
-        bootstrap: 
+        bootstrap: peer1-thuduchospital:30751
 
         # NOTE: orgLeader and useLeaderElection parameters are mutual exclusive.
         # Setting both to true would result in the termination of the peer
@@ -613,7 +613,7 @@ ledger:
     # the minimum duration (in milliseconds) between writing
     # two consecutive db batches for converting the ineligible missing data entries to eligible missing data entries
     collElgProcDbBatchesInterval: 1000
-    
+
 ###############################################################################
 #
 #    Operations section
@@ -666,5 +666,3 @@ metrics:
 
         # prefix is prepended to all emitted statsd metrics
         prefix:
-
-
