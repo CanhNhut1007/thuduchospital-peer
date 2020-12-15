@@ -12,58 +12,56 @@ RUN rm -r /etc/hyperledger/fabric
 ENV FABRIC_LOGGING_SPEC=INFO
 
 ENV ORG_CONTEXT="ThuDucHospital"
-ENV ORG_NAME="ThuDucHospital"
+ENV ORG_NAME="ThuDucHospitalMSP"
 #2. Copy the crypto for peer crypto
-COPY ./config-org/ThuDucHospital/peers/peer1 /var/hyperledger/ThuDucHospital
-
-RUN chmod 755 /var/hyperledger/ThuDucHospital/msp/config.yaml
+COPY ./config-org/ThuDucHospital/peers/peer2 /var/hyperledger/ThuDucHospital
 
 ENV FABRIC_CFG_PATH=/var/hyperledger/ThuDucHospital
 #3. Copy the crypto for admin crypto
 COPY ./config-org/ThuDucHospital/users /var/hyperledger/ThuDucHospital/users
+COPY config.yaml /var/hyperledger/ThuDucHospital/msp/config.yaml 
+RUN chmod 755 /var/hyperledger/ThuDucHospital/msp/config.yaml
 
 #4. Copy the anchor peer update tx
 #COPY ./config/acme-peer-update.tx /var/hyperledger/config/acme-peer-update.tx
 
 ENV CORE_PEER_MSPCONFIGPATH=/var/hyperledger/ThuDucHospital/msp
 
+ENV CORE_PEER_LOCALMSPID="ThuDucHospitalMSP"
+
 ENV FABRIC_CFG_PATH=/var/hyperledger/ThuDucHospital
 
-ENV CORE_PEER_ADDRESS="10.43.46.181:30751"
+ENV CORE_PEER_ADDRESS="10.43.151.21:31751"
 
-#ENV CORE_PEER_CHAINCODEADDRESS="peer1-thuduchospital:30752"
+#ENV CORE_PEER_CHAINCODEADDRESS="peer2-thuduchospital:31752"
 
 ENV CORE_VM_DOCKER_ATTACHSTDOUT=true
-
-ENV CORE_PEER_LOCALMSPID="ThuDucHospitalMSP"
 
 ENV CORE_PEER_GOSSIP_USELEADERELECTION=true
 
 ENV CORE_PEER_GOSSIP_ORGLEADER=false
 
-#ENV CORE_PEER_GOSSIP_BOOTSTRAP="peer1-thuduchospital:30751"
+ENV CORE_PEER_GOSSIP_BOOTSTRAP="peer1-thuduchospital:30751"
 
 ENV CORE_PEER_ENDORSER_ENABLED=true
 
+ENV CORE_PEER_GOSSIP_EXTERNALENDPOINT="peer2-thuduchospital:31751"
+
+ENV CORE_PEER_GOSSIP_ENDPOINT="peer2-thuduchospital:31751"
+
 ENV CORE_PEER_TLS_ENABLED=true
-
-ENV CORE_PEER_GOSSIP_EXTERNALENDPOINT="peer1-thuduchospital:30751"
-
-ENV CORE_PEER_GOSSIP_ENDPOINT="peer1-thuduchospital:30751"
 
 #5. Copy the channel create tx file
 COPY hospitalchannel.tx  /var/hyperledger/ThuDucHospital/hospitalchannel.tx
 
 #6. Copy the core YAML
-COPY ./config-org/ThuDucHospital/peers/peer1/core.yaml /var/hyperledger/ThuDucHospital
+COPY ./config-org/ThuDucHospital/peers/peer2/core.yaml /var/hyperledger/ThuDucHospital
 
-#7. Copy the test chaincode
-#COPY ./nodechaincode  /var/hyperledger/nodechaincode
-
-#8. Install the jq package - used in scripts
+#7. Install the jq package - used in scripts
 RUN apk update \
 && apk add jq \
 && rm -rf /var/cache/apk/*
+
 
 #8. COPY Golang
 RUN mkdir /usr/local/go
