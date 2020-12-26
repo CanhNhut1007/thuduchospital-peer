@@ -25,29 +25,6 @@ spec:
         env:
           - name: FABRIC_LOGGING_SPEC
             value: INFO
-          - name: ORDERER_ADDRESS
-            value: orderer1-ordererorg:30750
-          - name: CORE_PEER_ADDRESS
-            value: peer1-thuduchospital:30751
-          - name: FABRIC_LOGGING_SPEC
-            value: debug
-          - name: CORE_PEER_TLS_ENABLED
-            value: "true"
-          - name: CORE_PEER_GOSSIP_USELEADERELECTION
-            value: "false"
-          - name: CORE_PEER_GOSSIP_ORGLEADER
-            value: "true"
-          - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-            value: peer1-thuduchospital:30751
-          - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
-            value: "true"
-          # Replacement for set-context in alpine
-          # - name: MSP_ID
-          #   value: AcmeMSP
-          # - name: ORG_NAME
-          #   value: AcmeMSP
-          # - name: CORE_PEER_MSPCONFIGPATH
-          #   value:  /var/hyperledger/config/users/Admin@acme.com/msp
         volumeMounts:
         - name: peer1-thuduchospital-ledger
           mountPath: /var/ledger
