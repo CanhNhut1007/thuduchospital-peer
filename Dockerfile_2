@@ -12,7 +12,7 @@ RUN rm -r /etc/hyperledger/fabric
 ENV FABRIC_LOGGING_SPEC=INFO
 
 ENV ORG_CONTEXT="ThuDucHospital"
-ENV ORG_NAME="ThuDucHospitalMSP"
+ENV ORG_NAME="ThuDucHospital"
 #2. Copy the crypto for peer crypto
 COPY ./config-org/ThuDucHospital/peers/peer2 /var/hyperledger/ThuDucHospital
 
@@ -31,7 +31,7 @@ ENV CORE_PEER_LOCALMSPID="ThuDucHospitalMSP"
 
 ENV FABRIC_CFG_PATH=/var/hyperledger/ThuDucHospital
 
-ENV CORE_PEER_ADDRESS="10.43.151.21:31751"
+ENV CORE_PEER_ADDRESS="10.102.10.226:31751"
 
 #ENV CORE_PEER_CHAINCODEADDRESS="peer2-thuduchospital:31752"
 
